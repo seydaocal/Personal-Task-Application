@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Kişisel Görev Takip Uygulaması</h1>
+    <p>Görevlerinizi düzenleyerek zamanınızı kontrol edin.</p>
+
+    {% if user.is_authenticated %}
+        <p>Hoş geldin, {{ user.username }}!</p>
+    {% else %}
+        <p>Giriş yapın ya da kayıt olun.</p>
+    {% endif %}
+{% endblock %}

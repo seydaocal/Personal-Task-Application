@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr" >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title%} Kişisel Görev Takip Uygulaması{%endblock%}</title>
+    <style>
+        * {
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+        body {
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-color: azure;
+            color:rgb(98, 3, 3);
+        }
+
+        .navbar{
+            background-color: bisque;
+            border-bottom: 1px solid rgb(51, 1, 1);
+            padding:0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color:rgb(0, 0, 0);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color:rgb(57, 81, 149);
+            font-size: 0.95rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: rgb(41, 59, 107);
+            background-color: rgb(246, 248, 255);
+        }
+
+        /* Buton Stilleri */
+        .btn-primary {
+            background-color: rgb(184, 127, 222) !important;
+            color: #ffffff !important;
+        }
+
+        .btn-primary:hover {
+            background-color: rgb(180, 111, 226) !important;
+        }
+
+        .username {
+            font-weight: 600;
+            color: rgb(34, 53, 134);
+        }
+
+        /* Ana İçerik Konteyneri */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Menü -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="navbar-brand">Kişisel Görev Takip Uygulaması</a>
+        <nav>
+            <div class="nav-links">
+                {% if user.is_authenticated %}
+                    <span>Merhaba, <span class="username">{{ user.username }}</span></span>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Çıkış Yap</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Giriş Yap</a>
+                    {#<a href="{% url 'register' %}" class="btn-primary">Kayıt Ol</a>#}
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sayfaya Özel İçerik Alanı -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>
