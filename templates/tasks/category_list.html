@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Kategorilerim</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Ekle</button>
+</form>
+<ul>
+{% for c in categories %}
+    <li>{{ c.title }}
+        <form method="post" action="{% url 'category_delete' c.pk %}" style="display:inline" onsubmit="return confirm('Bu kategori ve içindeki tüm görevler silinecek. Emin misin?');">
+            {% csrf_token %}<button type="submit">Sil</button>
+        </form>
+    </li>
+{% empty %}
+    <li>Henüz kategori yok.</li>
+{% endfor %}
+</ul>
+<p><a href="{% url 'home' %}">← Görevlere dön</a></p>
+{% endblock %}

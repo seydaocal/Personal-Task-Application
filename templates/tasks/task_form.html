@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ title }}</h2>
+{% if not form.fields.category.queryset.exists %}
+<p>Önce <a href="{% url 'category_list' %}">bir kategori oluştur</a>.</p>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Kaydet</button>
+    <a href="{% url 'home' %}">İptal</a>
+</form>
+{% endblock %}

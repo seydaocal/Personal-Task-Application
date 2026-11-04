@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db.models import F
+from django.utils import timezone 
 
 
 class Category(models.Model):
@@ -36,5 +37,9 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title 
+    def days_left(self):
+        if self.due_date is None:
+            return None
+        return (self.due_date - timezone.localdate()).days
 
 

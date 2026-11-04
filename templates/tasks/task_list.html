@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="toolbar">
+    <h2>Görevlerim</h2>
+    <div>
+        <a href="{% url 'task_create' %}" class="btn">+ Yeni Görev</a>
+        <a href="{% url 'category_list' %}" class="btn">Kategoriler</a>
+    </div>
+</div>
+
+<form method="get" class="filters">
+    <input type="text" name="q" value="{{ q }}" placeholder="Ara...">
+    <select name="status">
+        <option value="">Tüm durumlar</option>
+        {% for value, label in status_choices %}
+        <option value="{{ value }}" {% if value == selected_status %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+    <select name="category">
+        <option value="">Tüm kategoriler</option>
+        {% for c in categories %}
+        <option value="{{ c.id }}" {% if c.id|stringformat:"s" == selected_category %}selected{% endif %}>{{ c.title }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn">Filtrele</button>
+    <a href="{% url 'home' %}">Temizle</a>
+</form>
+
+{% if tasks %}
+<table>
+    <thead>
+        <tr>
+            <th>★</th><th>Başlık</th><th>Kategori</th><th>Durum</th>
+            <th>Tarih</th><th>Kalan</th><th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+        <tr>
+            <td>{% if task.is_urgent %}★{% endif %}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.category.title }}</td>
+            <td>{{ task.get_status_display }}</td>
+            <td>
+                {% if task.due_date %}{{ task.due_date|date:"d.m.Y" }}{% if task.due_time %} {{ task.due_time|time:"H:i" }}{% endif %}{% else %}-{% endif %}
+            </td>
+            <td>
+                {% with d=task.days_left %}
+                    {% if d is None %}-{% elif d < 0 %}Süresi geçti{% elif d == 0 %}Bugün{% else %}{{ d }} gün{% endif %}
+                {% endwith %}
+            </td>
+            <td class="actions">
+                {% if task.status != "done" %}
+                <form method="post" action="{% url 'task_done' task.pk %}">
+                    {% csrf_token %}<button type="submit">Tamamla</button>
+                </form>
+                {% endif %}
+                <a href="{% url 'task_update' task.pk %}">Düzenle</a>
+                <form method="post" action="{% url 'task_delete' task.pk %}" onsubmit="return confirm('Bu görev silinsin mi?');">
+                    {% csrf_token %}<button type="submit">Sil</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Gösterilecek görev yok.</p>
+{% endif %}
+{% endblock %}
