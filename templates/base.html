@@ -155,6 +155,19 @@
             display: block; 
             margin-bottom: 0.2rem; 
         }
+
+        .messages {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        .message {
+            background: rgb(220, 252, 231);
+            color: rgb(22, 101, 52);
+            border: 1px solid rgb(134, 239, 172);
+            border-radius: 6px;
+            padding: 0.7rem 1rem;
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -180,6 +193,13 @@
 
     <!-- Sayfaya Özel İçerik Alanı -->
     <main class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="message">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>

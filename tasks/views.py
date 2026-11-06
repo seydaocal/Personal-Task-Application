@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 from .forms import TaskForm, CategoryForm
 from .models import Task, Category
@@ -13,6 +14,7 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Kayıt başarılı, giriş yapabilirsin.")
             return redirect("login")
     else:
         form = UserCreationForm()
@@ -51,6 +53,7 @@ def task_create(request):
             task = form.save(commit=False)
             task.user = request.user
             task.save()
+            messages.success(request, "Görev eklendi.")
             return redirect("home")
     else:
         form = TaskForm(user=request.user)
@@ -64,6 +67,7 @@ def task_update(request, pk):
         form = TaskForm(request.POST, instance=task, user=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, "Görev güncellendi.")
             return redirect("home")
     else:
         form = TaskForm(instance=task, user=request.user)
@@ -75,6 +79,7 @@ def task_update(request, pk):
 def task_delete(request, pk):
     task = get_object_or_404(Task, pk=pk, user=request.user)
     task.delete()
+    messages.success(request, "Görev silindi.")
     return redirect("home")
 
 
@@ -84,6 +89,7 @@ def task_done(request, pk):
     task = get_object_or_404(Task, pk=pk, user=request.user)
     task.status = "done"
     task.save()
+    messages.success(request, "Görev tamamlandı.")
     return redirect("home")
 
 
@@ -96,6 +102,7 @@ def category_list(request):
             category = form.save(commit=False)
             category.user = request.user
             category.save()
+            messages.success(request, "Kategori eklendi.")
             return redirect("category_list")
     else:
         form = CategoryForm()
@@ -108,5 +115,6 @@ def category_list(request):
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk, user=request.user)
     category.delete()
+    messages.success(request, "Kategori silindi.")
     return redirect("category_list")
 
