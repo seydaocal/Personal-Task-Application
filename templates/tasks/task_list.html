@@ -36,7 +36,10 @@
     </thead>
     <tbody>
     {% for task in tasks %}
-        <tr>
+        <tr class="
+            {% if task.days_left is not None and task.days_left < 0 and task.status != 'done' and task.status != 'canceled' %}
+            overdue
+            {% endif %}">
             <td>{% if task.is_urgent %}★{% endif %}</td>
             <td>{{ task.title }}</td>
             <td>{{ task.category.title }}</td>
@@ -46,7 +49,7 @@
             </td>
             <td>
                 {% with d=task.days_left %}
-                    {% if d is None %}-{% elif d < 0 %}Süresi geçti{% elif d == 0 %}Bugün{% else %}{{ d }} gün{% endif %}
+                {% if task.status == "done" or task.status == "canceled" %}-{% elif d is None %}-{% elif d < 0 %}Süresi geçti{% elif d == 0 %}Bugün{% else %}{{ d }} gün{% endif %}
                 {% endwith %}
             </td>
             <td class="actions">
