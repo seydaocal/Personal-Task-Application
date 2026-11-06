@@ -12,15 +12,19 @@
         }
         body {
             font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            background-color: azure;
+            background-color: rgb(245,243,255);
             color:rgb(0, 0, 0);
+        }
+
+        a {
+            color: rgb(37, 99, 235);
         }
 
         /* Üst Bar Stilleri */
         .navbar{
-            background-color: rgb(149, 213, 247);
-            border-bottom: 1px solid rgb(51, 1, 1);
-            padding:0.75rem 2rem;
+           background-color: rgb(43, 27, 78);
+            border-bottom: 3px solid rgb(108, 92, 231);
+            padding:0.75rem 2rem; 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,18 +34,19 @@
             font-weight: 700;
             font-size: 1.25rem;
             text-decoration: none;
-            color:rgb(0, 0, 0);
+            color:rgb(255,255,255);
         }
 
         .nav-links {
             display: flex;
             align-items: center;
             gap: 1rem;
+            color: rgb(255, 255, 255);
         }
 
         .nav-links a {
             text-decoration: none;
-            color:rgb(57, 81, 149);
+            color:rgb(255, 255, 255);
             font-size: 0.95rem;
             padding: 0.4rem 0.8rem;
             border-radius: 6px;
@@ -49,23 +54,32 @@
         }
 
         .nav-links a:hover {
-            color: rgb(57, 81, 190);
-            background-color: rgb(246, 248, 255);
+            color:rgb(255, 255, 255);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-links button {
+            background: rgb(255, 255, 255);
+            color: rgb(43, 27, 78);
+        }
+
+        .nav-links button:hover {
+            background: rgb(237, 233, 254);
         }
 
         /* Buton Stilleri */
         .btn-primary {
-            background-color: rgb(103, 35, 150) !important;
+            background-color: rgb(108, 92, 231) !important;
             color: #ffffff !important;
         }
 
         .btn-primary:hover {
-            background-color: rgb(130, 35, 150) !important;
+            background-color: rgb(88,70,214) !important;
         }
 
         .username {
             font-weight: 600;
-            color: rgb(0,0,0);
+            color: rgb(255,255,255);
         }
 
         /* Ana İçerik Konteyneri */
@@ -81,30 +95,53 @@
             align-items: center; 
             margin-bottom: 1rem; 
         }
-        .btn { 
-            background: rgb(184, 127, 222); 
+        .btn, button, .actions a{ 
+            background: rgb(108,92,231); 
             color: #fff; 
             padding: 0.4rem 0.8rem; 
             border-radius: 6px; 
             text-decoration: none; 
             border: none; 
-            cursor: pointer; }
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: inherit;
+            display: inline-block;
+        }
+        .btn:hover, button:hover, .actions a:hover{
+            background: rgb(88, 70, 214);
+        }
+
         .filters { 
             display: flex; 
             gap: 0.5rem; 
             flex-wrap: wrap; 
             margin-bottom: 1rem; 
-            align-items: center; }
+            align-items: center; 
+        }
         input, select, button, textarea { 
             padding: 0.4rem 0.6rem; 
-            font-size: 0.95rem; }
+            font-size: 0.95rem;
+            border: 1.5px solid rgb(207, 201, 234);
+            border-radius: 6px;
+        }
+         input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: rgb(108, 92, 231);
+        }
+
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            background:rgb(246, 248, 255); 
+            background:rgb(255,255, 255); 
         }
+
+        th {
+            background: rgb(237, 233, 254);
+            color: rgb(43, 27, 78);
+        }
+
         th, td { 
-            border-bottom: 1px solid rgb(184, 127, 222); 
+            border-bottom: 1px solid rgb(221,214,254); 
             padding: 0.6rem; 
             text-align: left; 
         }
@@ -135,7 +172,7 @@
                     </form>
                 {% else %}
                     <a href="{% url 'login' %}">Giriş Yap</a>
-                    {#<a href="{% url 'register' %}" class="btn-primary">Kayıt Ol</a>#}
+                    <a href="{% url 'register' %}" class="btn-primary">Kayıt Ol</a>
                 {% endif %}
             </div>
         </nav>
